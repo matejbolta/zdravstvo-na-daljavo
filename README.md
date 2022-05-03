@@ -8,7 +8,7 @@ Projekt je namenjen organizirani hrambi podatkov o slovenskem zdravstvu.
 ***
 ### ER diagram
 
-![er-diagram](https://user-images.githubusercontent.com/64838916/162076918-772578a5-aa89-4100-bdb7-d8a8da0a4ca5.png)
+![er-diagram](https://user-images.githubusercontent.com/64838916/166563730-2a309fc2-b061-4ef0-8107-cf54e04e537c.png)
 
 ***
 
