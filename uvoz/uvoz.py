@@ -14,7 +14,7 @@ def ustvari_tabele():
         );
         
         CREATE TABLE zdravnik (
-        emšo INT PRIMARY KEY,
+        emso INT PRIMARY KEY,
         ime TEXT NOT NULL,
         priimek TEXT NOT NULL,
         specializacija TEXT NOT NULL,
@@ -23,42 +23,42 @@ def ustvari_tabele():
         );
         
         CREATE TABLE pacient (
-        emšo INTEGER PRIMARY KEY,
-        zdravstvena_št INTEGER NOT NULL,
+        emso INTEGER PRIMARY KEY,
+        zdravstvena_st INTEGER NOT NULL,
         ime TEXT NOT NULL,
         priimek TEXT NOT NULL,
         spol CHAR(1) NOT NULL,
         datum_rojstva DATE NOT NULL,
-        teža DECIMAL,
-        višina DECIMAL,
-        osebni_zdravnik INTEGER REFERENCES zdravnik(emšo)
+        teza DECIMAL,
+        visina DECIMAL,
+        zdravnik_emso INTEGER REFERENCES zdravnik(emso)
         );
         
         CREATE TABLE zaposlitev (
-        zdravnik INTEGER REFERENCES zdravnik(emšo),
-        zdravstveni_dom INTEGER REFERENCES zdravstveni_dom(id),
-        datum_zaposlitve DATE NOT NULL,
-        PRIMARY KEY (zdravnik, zdravstveni_dom)
+        zdravnik_emso INTEGER REFERENCES zdravnik(emso),
+        zdravstveni_dom_id INTEGER REFERENCES zdravstveni_dom(id),
+        datum DATE NOT NULL,
+        PRIMARY KEY (zdravnik_emso, zdravstveni_dom_id)
         );
         
         CREATE TABLE pregled (
-        pacient INTEGER NOT NULL REFERENCES pacient(emšo),
-        čas TIMESTAMP NOT NULL,
-        zdravstveni_dom INTEGER REFERENCES zdravstveni_dom(id),
-        zdravnik INTEGER NOT NULL REFERENCES zdravnik(emšo),
+        pacient_emso INTEGER NOT NULL REFERENCES pacient(emso),
+        cas TIMESTAMP NOT NULL,
+        zdravstveni_dom_id INTEGER REFERENCES zdravstveni_dom(id),
+        zdravnik_emso INTEGER NOT NULL REFERENCES zdravnik(emso),
         razlog TEXT,
         izvid TEXT,
-        PRIMARY KEY (pacient, čas)
+        PRIMARY KEY (pacient_emso, cas)
         );
         
         CREATE TABLE sporocilo (
-        pacient INTEGER NOT NULL REFERENCES pacient(emšo),
-        čas TIMESTAMP NOT NULL,
-        zdravnik INTEGER NOT NULL REFERENCES zdravnik(emšo),
+        pacient_emso INTEGER NOT NULL REFERENCES pacient(emso),
+        cas TIMESTAMP NOT NULL,
+        zdravnik_emso INTEGER NOT NULL REFERENCES zdravnik(emso),
         nujnost TEXT NOT NULL,
         tema TEXT,
         vsebina TEXT NOT NULL,
-        PRIMARY KEY (pacient, čas)
+        PRIMARY KEY (pacient_emso, cas)
         );
     """)
     conn.commit()
