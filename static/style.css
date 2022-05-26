@@ -1,0 +1,11 @@
+.warning {
+    background-color: #D0342C;
+    color: #ffffff;
+    font-weight: 900;
+}
+
+.success { /* ni uporabljeno zaenkrat */
+    background-color: #2eb92e;
+    color: #ffffff;
+    font-weight: 900;
+}
