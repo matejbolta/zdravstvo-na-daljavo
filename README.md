@@ -12,7 +12,8 @@ Projekt je namenjen organizirani hrambi podatkov v slovenskem zdravstvu. Sestavl
 ***
 
 ### Zagon
-Zaenkrat je zagon baze le lokalen. Po prenosu repozitorija v terminalu poženite datoteko `zdravstvo_na_daljavo.py`. Nato sledite [povezavi](http://localhost:8080/).
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/matejbolta/zdravstvo-na-daljavo/main?urlpath=proxy/8080/)<br />
+Alternativno, če vam preko zgornje povezave ne uspe: prenesite repozitorij in v terminalu poženite datoteko `zdravstvo_na_daljavo.py`. Nato sledite [povezavi](http://localhost:8080/).
 
 ***
 
