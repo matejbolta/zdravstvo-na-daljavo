@@ -1,25 +1,33 @@
-% rebase('base.tpl', naslov='Izberite željeno stran!')
+% rebase('base.tpl', naslov='ZDRAVSTVO NA DALJAVO')
 
 <p>
-  <a href="{{url('zdravniki')}}">
-    Zdravniki
-  </a>
+  <button>
+    <a href="{{url('zdravniki')}}">
+      Zdravniki
+    </a>
+  </button>
 </p>
 
 <p>
+  <button>
   <a href="{{url('pacienti')}}">
     Pacienti
   </a>
+  </button>
 </p>
 
 <p>
+  <button>
   <a href="{{url('zdravstveni_domovi', treshold=1)}}">
     Zdravstveni domovi
   </a>
+  </button>
 </p>
 
 <p>
+  <button>
   <a href="{{url('zaposlitve_zdravnikov')}}">
-    Kje so zdravniki zaposleni
+    Zaposlitve zdravnikov
   </a>
+  </button>
 </p>

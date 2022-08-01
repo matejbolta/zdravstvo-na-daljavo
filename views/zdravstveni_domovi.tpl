@@ -1,12 +1,14 @@
-% rebase('base.tpl', naslov='Zdravstveni domovi z kapaciteto vsaj {} oseb'.format(treshold))
+% rebase('base.tpl', naslov='Zdravstveni domovi s kapaciteto vsaj {} oseb'.format(treshold))
 
 <p>
-  <a href="{{url('/')}}">
-    Domov
-  </a>
+  <button>
+    <a href="{{url('/')}}">
+      Domov
+    </a>
+  </button>
 </p>
 
-<table cellpadding="5" cellspacing="0" border="6">
+<table cellpadding="10" cellspacing="0" border="12">
   <tr>
     <th>ID</th>
     <th>Ime</th>
