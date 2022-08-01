@@ -5,9 +5,9 @@
 from bottleext import get, post, request, url, run, template, redirect, static_file, debug
 
 # Uvozimo avtentikacijo za povezavo z bazo
-import auth
+# import auth
 # Če se želimo v spletnem vmesniku predstaviti kot javnost, odkomentiramo spodnjo vrstico
-# import auth_public as auth
+import auth_public as auth
 
 # Uvozimo psycopg2
 import psycopg2, psycopg2.extensions, psycopg2.extras
