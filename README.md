@@ -1,6 +1,7 @@
 # [Zdravstvo na daljavo](https://github.com/matejbolta/zdravstvo-na-daljavo)
 
 ##### Projektna naloga pri predmetu [Osnove podatkovnih baz](https://github.com/jaanos/OPB) na __[Fakulteti za matematiko in fiziko](https://www.fmf.uni-lj.si/si/)__.
+Projekt je v nastajanju.
 
 ### Uvod
 Projekt je namenjen organizirani hrambi podatkov v slovenskem zdravstvu. Sestavljen je iz večih faz:
