@@ -94,7 +94,7 @@ def pobrisi_tabele():
 
 def uvozi_podatke():
     for ime_dat in ["zdravstveni_dom.sql", "zdravnik.sql", "pacient.sql", "zaposlitev.sql", "pregled.sql", "sporocilo.sql", "uporabnik_pacient.sql", "uporabnik_zdravnik.sql"]:
-        with open(current + "\\podatki\\" + ime_dat) as d:
+        with open(os.path.join(current, "podatki", ime_dat)) as d:
             cur.execute(d.read())
             conn.commit()
 
