@@ -1,19 +1,25 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 
-# Uvozimo bottle. Bottleext nam omogoča pravilno lepljenje URLjev, da ne pride to težav pri pogonu iz oblaka (binder)
-from bottleext import get, post, request, url, run, template, redirect, static_file, debug
+# na novo na bazi:
+# - dodane tabele uporabnikov (avtomatsko na uvozu)
+# - pravice javnosti (select, insert, update, delete na uporabnik_zdravnik in uporabnik_pacient)
 
-# Uvozimo avtentikacijo za povezavo z bazo
-import auth
-# Če se želimo v spletnem vmesniku predstaviti kot javnost, odkomentiramo spodnjo vrstico
-# import auth_public as auth
+# Uvozimo bottle. Bottleext nam omogoča pravilno lepljenje URLjev, da ne pride to težav pri pogonu iz oblaka (binder)
+from numpy import ufunc
+from bottleext import get, post, request, url, response, run, template, redirect, static_file, debug
+
+# Na bazo se prijavimo kot uporabnik javnost
+import auth_public as auth
 
 # Uvozimo psycopg2
 import psycopg2, psycopg2.extensions, psycopg2.extras
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # Da šumniki in podobno delujejo pravilno.
 
 import os
+
+with open('secret.txt') as d:
+    SECRET = d.read()
 
 # Privzete nastavitve
 SERVER_PORT = os.environ.get('BOTTLE_PORT', 8080)
@@ -29,7 +35,37 @@ def static(filename):
 
 @get('/')
 def index():
-    return template('index.tpl', message=None)
+    # preko piškotka ugotovimo, če je uporabnik že prijavljen ali pa ga moramo preusmeriti na prijavo
+    (p_ali_z, emso) = request.get_cookie('user', secret=SECRET)
+    if emso is not None:
+        return template('index.tpl', message=None)
+    redirect('/login/')
+
+
+@get("/login/")
+def login_get():
+    return template("login.tpl", napaka=None, username=None)
+
+
+@post("/login/")
+def login_post():
+    username = request.forms.username
+    password = request.forms.password # !!! MOGOCE JE TREBA SE HASH
+    cur.execute("SELECT 1 FROM uporabnik_pacient WHERE uporabnisko_ime=%s AND geslo=%s",(username, password))
+    if cur.fetchone() is None:
+        # ni pacienta s tako kombinacijo uporabniskega imena in gesla
+        cur.execute("SELECT emso FROM uporabnik_zdravnik WHERE uporabnisko_ime=%s AND geslo=%s",(username, password))
+        if cur.fetchone() is None:
+            # ni niti zdravnika s tako kombinacijo uporabniskega imena in gesla
+            return template("login.tpl", napaka="Nepravilna prijava", username=username)
+        else:
+            # je zdravnik s tako kombinacijo uporabniskega imena in gesla
+            response.set_cookie('user', ("zdravnik", cur.fetchone()), path='/', secret=SECRET)
+            redirect("/")
+    else:
+        # je pacient s tako kombinacijo uporabniskega imena in gesla
+        response.set_cookie('user', ("pacient", cur.fetchone()), path='/', secret=SECRET)
+        redirect("/")
 
 
 @get('/zdravniki')
