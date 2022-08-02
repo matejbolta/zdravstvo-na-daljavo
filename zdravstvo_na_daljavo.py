@@ -36,41 +36,44 @@ def static(filename):
 @get('/')
 def index():
     # preko piškotka ugotovimo, če je uporabnik že prijavljen ali pa ga moramo preusmeriti na prijavo
-    (p_ali_z, emso) = request.get_cookie('user', secret=SECRET)
-    if emso is not None:
+    user = request.get_cookie('user', secret=SECRET)
+    print(user)
+    if user is not None:
+        p_ali_z, emso = user
         return template('index.tpl', message=None)
     redirect('/login/')
 
 
-@get("/login/")
+@get('/login/')
 def login_get():
-    return template("login.tpl", napaka=None, username=None)
+    return template('login.tpl', napaka=None, username=None)
 
 
-@post("/login/")
+@post('/login/')
 def login_post():
     username = request.forms.username
     password = request.forms.password # !!! MOGOCE JE TREBA SE HASH
-    cur.execute("SELECT 1 FROM uporabnik_pacient WHERE uporabnisko_ime=%s AND geslo=%s",(username, password))
-    if cur.fetchone() is None:
+    p = cur.execute('SELECT emso FROM uporabnik_pacient WHERE uporabnisko_ime=%s AND geslo=%s',(username, password))
+    if p is None:
         # ni pacienta s tako kombinacijo uporabniskega imena in gesla
-        cur.execute("SELECT emso FROM uporabnik_zdravnik WHERE uporabnisko_ime=%s AND geslo=%s",(username, password))
-        if cur.fetchone() is None:
+        cur.execute('SELECT emso FROM uporabnik_zdravnik WHERE uporabnisko_ime=%s AND geslo=%s',(username, password))
+        z = cur.fetchone()
+        if z is None:
             # ni niti zdravnika s tako kombinacijo uporabniskega imena in gesla
-            return template("login.tpl", napaka="Nepravilna prijava", username=username)
+            return template('login.tpl', napaka='Nepravilna prijava', username=username)
         else:
             # je zdravnik s tako kombinacijo uporabniskega imena in gesla
-            response.set_cookie('user', ("zdravnik", cur.fetchone()), path='/', secret=SECRET)
-            redirect("/")
+            response.set_cookie('user', ('z', z), path='/', secret=SECRET)
+            redirect('/')
     else:
         # je pacient s tako kombinacijo uporabniskega imena in gesla
-        response.set_cookie('user', ("pacient", cur.fetchone()), path='/', secret=SECRET)
-        redirect("/")
+        response.set_cookie('user', ('p', p), path='/', secret=SECRET)
+        redirect('/')
 
 
 @get('/zdravniki')
 def zdravniki():
-    cur.execute("SELECT * FROM zdravnik")
+    cur.execute('SELECT * FROM zdravnik')
     return template('zdravniki.tpl', zdravniki=cur)
 
 
@@ -86,7 +89,7 @@ def pacienti():
 
 @get('/zdravstveni_domovi/<treshold:int>')
 def zdravstveni_domovi(treshold):
-    cur.execute("SELECT * FROM zdravstveni_dom WHERE kapaciteta >= %s ORDER BY kapaciteta, id", [treshold])
+    cur.execute('SELECT * FROM zdravstveni_dom WHERE kapaciteta >= %s ORDER BY kapaciteta, id', [treshold])
     return template('zdravstveni_domovi.tpl', zdravstveni_domovi=cur, treshold=treshold)
 
 
@@ -99,9 +102,32 @@ def zaposlitve_zdravnikov():
     """)
     return template('zaposlitve_zdravnikov.tpl', zaposlitve_zdravnikov=cur)
 
+
+@get('/moj_profil/')
+def moj_profil():  
+    user = request.get_cookie('user', secret=SECRET)
+    p_ali_z, emso = user
+    if p_ali_z == 'z':
+        cur.execute("""
+        SELECT * FROM zdravnik
+        LEFT JOIN zaposlitev ON emso = zaposlitev.zdravnik_emso
+        LEFT JOIN zdravstveni_dom ON zdravstveni_dom_id = zdravstveni_dom.id
+        WHERE emso=%s
+        """, [emso[0]])
+        zdravnik=cur.fetchone()
+        cur.execute("""
+        SELECT * FROM pacient 
+        WHERE zdravnik_emso=%s
+        """,[emso[0]])
+        return template('profil_zdravnik.tpl', zdravnik=zdravnik, pacienti=cur)
+    else:
+        return template('profil_pacient.tpl', pacient=cur)
+
+
 @get('/dodaj_pacienta')
 def dodaj_pacienta():
     return template('dodaj_pacienta.tpl', ime='', priimek='', emso='', st_zdr_zav='', spol='', datum_rojstva='', visina='', teza='', zdravnik_emso='', napaka=None)
+
 
 @post('/dodaj_pacienta')
 def dodaj_pacienta_post():
@@ -115,7 +141,7 @@ def dodaj_pacienta_post():
     teza = request.forms.getunicode('teza')
     zdravnik_emso = request.forms.getunicode('zdravnik_emso')
     try:
-        cur.execute("INSERT INTO pacient (emso,zdravstvena_st,ime,priimek,spol,datum_rojstva,teza,visina,zdravnik_emso) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        cur.execute('INSERT INTO pacient (emso,zdravstvena_st,ime,priimek,spol,datum_rojstva,teza,visina,zdravnik_emso) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
                     (emso, st_zdr_zav, ime, priimek, spol, datum_rojstva, teza, visina, zdravnik_emso))
     except Exception as e:
         conn.rollback()
@@ -134,5 +160,5 @@ conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, passwo
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 # Poženemo strežnik na podanih vratih, npr. http://localhost:8080/
-if __name__ == "__main__":
+if __name__ == '__main__':
     run(host='localhost', port=SERVER_PORT, reloader=RELOADER)

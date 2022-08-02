@@ -26,8 +26,8 @@
 
 <p>
   <button>
-  <a href="{{url('zaposlitve_zdravnikov')}}">
-    Zaposlitve zdravnikov
+  <a href="{{url('moj_profil')}}">
+    Moj profil
   </a>
   </button>
 </p>
