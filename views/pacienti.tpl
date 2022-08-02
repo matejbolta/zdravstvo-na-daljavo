@@ -1,18 +1,22 @@
 % rebase('base.tpl', naslov='Pacienti')
 
 <p>
-  <a href="{{url('/')}}">
-    Domov
-  </a>
+  <button>
+    <a href="{{url('/')}}">
+      Domov
+    </a>
+  </button>
 </p>
 
 <p>
-  <a href="{{url('dodaj_pacienta')}}">
-    Dodaj pacienta
-  </a>
+  <button>
+    <a href="{{url('dodaj_pacienta')}}">
+      Dodaj pacienta
+    </a>
+  </button>
 </p>
 
-<table cellpadding="5" cellspacing="0" border="6">
+<table cellpadding="10" cellspacing="0" border="12">
   <tr>
     <th>Ime</th>
     <th>Priimek</th>
