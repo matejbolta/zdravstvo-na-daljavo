@@ -2,6 +2,7 @@
 auth.py
 .vscode
 zdravstvo-na-daljavo.dia
+secret.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

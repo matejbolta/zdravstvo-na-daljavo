@@ -1,3 +1,9 @@
+import sys
+import os
+
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
 import auth
 import psycopg2, psycopg2.extensions, psycopg2.extras
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # S tem se znebimo problemov z npr. šumniki
@@ -58,11 +64,25 @@ def ustvari_tabele():
             vsebina TEXT NOT NULL,
             PRIMARY KEY (pacient_emso, datum)
         );
+
+        CREATE TABLE uporabnik_pacient (
+            emso TEXT PRIMARY KEY REFERENCES pacient(emso),
+            uporabnisko_ime TEXT NOT NULL,
+            geslo TEXT NOT NULL  
+        );
+
+        CREATE TABLE uporabnik_zdravnik (
+            emso TEXT PRIMARY KEY REFERENCES zdravnik(emso),
+            uporabnisko_ime TEXT NOT NULL,
+            geslo TEXT NOT NULL  
+        );
     """)
     conn.commit()
 
 def pobrisi_tabele():
     cur.execute("""
+        DROP TABLE uporabnik_pacient;
+        DROP TABLE uporabnik_zdravnik;
         DROP TABLE sporocilo;
         DROP TABLE pregled;
         DROP TABLE zaposlitev;
@@ -71,6 +91,17 @@ def pobrisi_tabele():
         DROP TABLE zdravstveni_dom;
     """)
     conn.commit()
+
+def uvozi_podatke():
+    for ime_dat in ["zdravstveni_dom.sql", "zdravnik.sql", "pacient.sql", "zaposlitev.sql", "pregled.sql", "sporocilo.sql", "uporabnik_pacient.sql", "uporabnik_zdravnik.sql"]:
+        with open(current + "\\podatki\\" + ime_dat) as d:
+            cur.execute(d.read())
+            conn.commit()
+
+def resetiraj_bazo():
+    pobrisi_tabele()
+    ustvari_tabele()
+    uvozi_podatke()
 
 # Test interakcije z online bazo:
 def zdravstveni_dom(stevilo=100):
