@@ -1,3 +1,15 @@
+<style>
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #98B4D4;
+  color: white;
+  text-align: center;
+}
+</style>
+
 <html>
 
   <head>
@@ -22,7 +34,7 @@
 
   <body>
       <h2>{{naslov}}</h2> <hr>
-    
+
       <div class="container">
         {{!base}}
       </div>
@@ -30,5 +42,24 @@
     <!-- bootstrap -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script> -->
   </body>
+
+  <div class="footer">
+    <div class="buttons">
+    % if domov:
+    <button>
+      <a href="{{url('/')}}">
+        Domov
+      </a>
+    </button>
+    % end
+    % if odjava:
+    <button>
+      <a href="{{url('/logout/')}}">
+        Odjava
+      </a>
+    </button>
+    % end
+    </div>
+  </div>
 
 </html>

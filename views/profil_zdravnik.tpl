@@ -1,4 +1,4 @@
-% rebase('base.tpl', naslov='Moj profil')
+% rebase('base.tpl', naslov='Moj profil', domov=True, odjava=True)
 
 % (emso, ime, priimek, _, datum_rojstva, _, _, _, datum_zaposlitve, _, _, ime_doma, _) = zdravnik
 
@@ -34,11 +34,46 @@
     <td>{{visina}}</td>
     <td>{{teza}}</td>
     <td>
-      <a href="#link">Sporočila</a>
+      <a href="{{url('sporocila', pacient_emso=emso)}}">
+        Sporočila
+      </a>
     </td>
     <td>
-      <a href="#link">Izvidi</a>
+      <a href="{{url('izvidi', pacient_emso=emso)}}">
+        Izvidi
+      </a>
     </td>
   </tr>
   % end
 </table>
+
+<p>
+  <button>
+    <a href="{{url('dodaj_pacienta')}}">
+      Dodaj pacienta
+    </a>
+  </button>
+</p>
+
+<h2>Zadnja sporočila</h2>
+<table cellpadding="10" cellspacing="0" border="12">
+  <tr>
+    <th>Pošiljatelj</th>
+    <th>Datum</th>
+    <th>Tema</th>
+    <th>Vsebina</th>
+    <th>Nujnost</th>
+  </tr>
+  % for (ime, priimek, datum, nujnost, tema, vsebina) in sporocila:
+  <tr>
+    <th>{{ime}} {{priimek}}</th>
+    <td>{{datum}}</td>
+    <td>{{tema}}</td>
+    <td>{{vsebina}}</td>
+    <td>{{nujnost}}</td>
+  </tr>
+  % end
+</table>
+
+<br>
+<br>

@@ -1,4 +1,4 @@
-% rebase('base.tpl', naslov='ZDRAVSTVO NA DALJAVO')
+% rebase('base.tpl', naslov='ZDRAVSTVO NA DALJAVO', domov=False, odjava=True)
 
 <p>
   <button>

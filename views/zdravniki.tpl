@@ -1,12 +1,4 @@
-% rebase('base.tpl', naslov='Zdravniki')
-
-<p>
-  <button>
-  <a href="{{url('/')}}">
-    Domov
-  </a>
-  </button>
-</p>
+% rebase('base.tpl', naslov='Zdravniki', domov=True, odjava=True)
 
 <table cellpadding="10" cellspacing="0" border="12">
   <tr>
@@ -28,3 +20,6 @@
   </tr>
   % end
 </table>
+
+<br>
+<br>
