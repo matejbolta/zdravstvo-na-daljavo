@@ -163,4 +163,4 @@ def zdravstveni_dom(stevilo=100):
 conn = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-resetiraj_bazo(True)
+bla

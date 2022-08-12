@@ -3,7 +3,6 @@
 
 import time
 # Uvozimo bottle. Bottleext nam omogoča pravilno lepljenje URLjev, da ne pride to težav pri pogonu iz oblaka (binder)
-from numpy import ufunc
 from bottleext import get, post, request, url, response, run, template, redirect, static_file, debug
 
 # Na bazo se prijavimo kot uporabnik javnost
@@ -12,7 +11,6 @@ import auth_public as auth
 # Uvozimo psycopg2
 import psycopg2, psycopg2.extensions, psycopg2.extras
 
-from uvoz.uvoz import zdravstveni_dom
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # Da šumniki in podobno delujejo pravilno.
 
 import os
