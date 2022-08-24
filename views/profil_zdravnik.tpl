@@ -2,13 +2,12 @@
 
 % (emso, ime, priimek, _, datum_rojstva, _, _, _, datum_zaposlitve, _, _, ime_doma, _) = zdravnik
 
-<h2>Moji podatki</h2>
-<p>Ime in priimek: {{ime}} {{priimek}}</p>
-<p>Datum rojstva: {{datum_rojstva}}</p>
+<h3>{{ime}} {{priimek}}</h3>
 <p>Emšo: {{emso}}</p>
+<p>Datum rojstva: {{datum_rojstva}}</p>
 <p>Zaposlitev: {{ime_doma}}</p>
 <p>Datum zaposlitve: {{datum_zaposlitve}}</p>
-
+<br>
 <h2>Moji pacienti</h2>
 <table cellpadding="10" cellspacing="0" border="12">
   <tr>
@@ -50,10 +49,12 @@
 <p>
   <button>
     <a href="{{url('dodaj_pacienta')}}">
-      Dodaj pacienta
+      Dodaj novega pacienta
     </a>
   </button>
 </p>
+
+<br>
 
 <h2>Zadnja sporočila</h2>
 <table cellpadding="10" cellspacing="0" border="12">
@@ -75,5 +76,4 @@
   % end
 </table>
 
-<br>
-<br>
+<br><br><br><br>

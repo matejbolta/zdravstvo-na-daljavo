@@ -1,14 +1,17 @@
 <style>
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #98B4D4;
-  color: white;
-  text-align: center;
-}
+  .footer {
+    position: fixed;
+    padding-top: 10;
+    padding-bottom: 10;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #95ADC9;
+    color: #262D35;
+    text-align: center;
+  }
 </style>
+
 
 <html>
 
@@ -24,8 +27,8 @@
 
     <style>
       table { margin-left: auto; margin-right: auto; font-family: Agency FB; background-color: #A5BDD9; }
-      body { text-align: center; font-family: Verdana; background-color: #98B4D4; }
-      button { background-color: #B2C7DF; border: 3px ; border-color: antiquewhite ; color: white; padding: 12px; font-size: 16px; font-family: Verdana; font-weight: bold; border-radius: 21px }
+      body { text-align: center; font-family: Verdana; background-color: #98B4D4; color: #262D35 }
+      button { background-color: #B2C7DF; border: 3px ; border-color: antiquewhite ; color: #262D35; padding: 12px; font-size: 16px; font-family: Verdana; font-weight: bold; border-radius: 21px }
     </style>
 
     <!-- bootstrap -->
@@ -43,8 +46,8 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script> -->
   </body>
 
+  % if domov or odjava:
   <div class="footer">
-    <div class="buttons">
     % if domov:
     <button>
       <a href="{{url('/')}}">
@@ -59,7 +62,7 @@
       </a>
     </button>
     % end
-    </div>
   </div>
+  % end
 
 </html>

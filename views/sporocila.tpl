@@ -30,12 +30,12 @@ Od te osebe še nimate sporočil.
 % end
 
 % if p_ali_z == 'p':
-<h2>Napiši sporočilo</h2>
+<br><br>
+
+<h3>Novo sporočilo</h3>
 <button>
 <form action="{{url('sporocila', pacient_emso=emso)}}" method="POST">
-  <p>Tema   : <input type="text" name="tema" value="{{vnesena_tema}}"></p>
-  <p>Vsebina  : <input type="text" name="vsebina" value="{{vnesena_vsebina}}"></p>
-  <p>Nujnost  : 
+  <p>Nujnost  :
     <select name="nujnost" id="lang", value="{{vnesena_nujnost}}">
       <option value="redno">Redno</option>
       <option value="hitro">Hitro</option>
@@ -44,10 +44,12 @@ Od te osebe še nimate sporočil.
       <option value="zelo nujno">Zelo nujno</option>
     </select>
   </p>
-  <p><input type="submit" value="Dodaj izvid"></p>
+  <p>Tema   : <br><input type="text" name="tema" value="{{vnesena_tema}}"></p>
+  <p>Vsebina  :<br> <textarea rows="8" cols="50" name="vsebina" value="{{vnesena_vsebina}}"></textarea></p>
+
+  <input type="submit" value="Pošlji sporočilo">
 </form>
 </button>
 % end
 
-<br>
-<br>
+<br><br><br><br>

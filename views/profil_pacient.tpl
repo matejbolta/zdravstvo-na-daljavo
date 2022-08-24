@@ -1,20 +1,21 @@
-% rebase('base.tpl', naslov='Moj profil', domov=True, odjava=True)
+% rebase('base.tpl', naslov='Moj profil', domov=False, odjava=True)
 
 % (emso, zdr_st, ime, priimek, spol, datum_rojstva, teza, visina, _, zdravnik_ime, zdravnik_priimek, _) = podatki
 
-<h2>Moji podatki</h2>
-<p>Ime in priimek: {{ime}} {{priimek}}</p>
-<p>Datum rojstva: {{datum_rojstva}}</p>
+<h3>{{ime}} {{priimek}}</h3>
+<p>Emšo: {{emso}}</p>
+<p>Št. zdr. zavarovanja: {{zdr_st}}</p>
+Datum rojstva: {{datum_rojstva}}
 % if spol == 'M':
 <p>Spol: Moški</p>
 % else:
 <p>Spol: Ženski</p>
 % end
-<p>Emšo: {{emso}}</p>
-<p>Številka zdravstvenega zavarovanja: {{zdr_st}}</p>
-<p>Teža: {{teza}} kg</p>
 <p>Višina: {{visina}} cm</p>
+<p>Teža: {{teza}} kg</p>
 <p>Osebni zdravnik: {{zdravnik_ime}} {{zdravnik_priimek}}</p>
+
+<br>
 
 <p>
 <button>

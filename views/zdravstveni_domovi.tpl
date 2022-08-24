@@ -1,17 +1,17 @@
-% rebase('base.tpl', naslov='Zdravstveni domovi s kapaciteto vsaj {} oseb'.format(treshold), domov=True, odjava=True)
+% rebase('base.tpl', naslov='Zdravstveni domovi', domov=True, odjava=True)
 
 % if napaka:
   <p class="warning">
     {{napaka}}
   </p>
 % end
-
+<br>
 <button>
 <form action="{{url('zdravstveni_domovi', treshold=1)}}" method="POST">
-  <p>Pokaži domove s kapaciteto, večjo od   : <input type="int" name="kapaciteta" value="{{kapaciteta}}"></p>
+  <p>Minimalna kapaciteta  : <input style="text-align:center;" size="1" type="int" name="kapaciteta" value="{{kapaciteta}}"></p>
 </form>
 </button>
-
+<br><br>
 <table cellpadding="10" cellspacing="0" border="12">
   <tr>
     <th>ID</th>
@@ -31,5 +31,4 @@
   % end
 </table>
 
-<br>
-<br>
+<br><br><br><br>

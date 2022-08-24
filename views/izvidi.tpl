@@ -36,15 +36,15 @@ Ta oseba še nima izvidov.
 % end
 
 % if p_ali_z == 'z':
-<h2>Dodaj izvid</h2>
+<br>
+<h3>Dodaj izvid</h3>
 <button>
 <form action="{{url('izvidi', pacient_emso=emso)}}" method="POST">
-  <p>Razlog   : <input type="text" name="razlog" value="{{vnesen_razlog}}"></p>
-  <p>Izvid   : <input type="text" name="izvid" value="{{vnesen_izvid}}"></p>
+  <p>Razlog   : <br><input size="30" type="text" name="razlog" value="{{vnesen_razlog}}"></p>
+  <p>Izvid   : <br><textarea rows="8" cols="50" type="text" name="izvid" value="{{vnesen_izvid}}"></textarea></p>
   <p><input type="submit" value="Dodaj izvid"></p>
 </form>
 </button>
 % end
 
-<br>
-<br>
+<br><br><br><br>

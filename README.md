@@ -1,7 +1,6 @@
 # [Zdravstvo na daljavo](https://github.com/matejbolta/zdravstvo-na-daljavo)
 
 ##### Projektna naloga pri predmetu [Osnove podatkovnih baz](https://github.com/jaanos/OPB) na __[Fakulteti za matematiko in fiziko](https://www.fmf.uni-lj.si/si/)__.
-Projekt je v nastajanju.
 
 ### Uvod
 Projekt je namenjen organizirani hrambi podatkov v slovenskem zdravstvu. Sestavljen je iz večih faz:
@@ -13,7 +12,7 @@ Projekt je namenjen organizirani hrambi podatkov v slovenskem zdravstvu. Sestavl
 
 ### Zagon
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/matejbolta/zdravstvo-na-daljavo/main?urlpath=proxy/8080/)<br />
-Alternativno, če vam preko zgornje povezave ne uspe: prenesite repozitorij in v terminalu poženite datoteko `zdravstvo_na_daljavo.py`. Nato sledite [povezavi](http://localhost:8080/).
+Alternativno: prenesite repozitorij in v terminalu poženite datoteko `zdravstvo_na_daljavo.py`. Nato sledite [povezavi](http://localhost:8080/).
 
 ***
 
