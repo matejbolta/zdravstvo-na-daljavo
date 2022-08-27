@@ -38,8 +38,8 @@ def index():
         if user[0] == 'z':
             return template('index.tpl', message=None)
         else:
-            redirect(url('/moj_profil/'))
-    redirect('/login/')
+            redirect(url('moj_profil'))
+    redirect(url('login_get'))
 
 
 @get('/login/')
@@ -70,11 +70,11 @@ def login_post():
         else:
             # je zdravnik s tako kombinacijo uporabniskega imena in gesla
             response.set_cookie('user', ('z', z), path='/', secret=SECRET)
-            redirect('/')
+            redirect(url('index'))
     else:
         # je pacient s tako kombinacijo uporabniskega imena in gesla
         response.set_cookie('user', ('p', p), path='/', secret=SECRET)
-        redirect('/')
+        redirect(url('index'))
 
 
 @get('/zdravniki')
@@ -258,7 +258,7 @@ def dodaj_pacienta_post():
 @get("/logout/")
 def logout():
     response.delete_cookie('user')
-    redirect('/login/')
+    redirect(url('login_get'))
 
 ###########################################################################################
 ###########################################################################################
