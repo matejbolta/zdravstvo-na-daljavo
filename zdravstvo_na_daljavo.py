@@ -182,6 +182,7 @@ def sporocila(pacient_emso):
             """, [pacient_emso])
         return template('sporocila.tpl', pacient=pacient, sporocila=cur, p_ali_z=p_ali_z, vnesena_tema=tema, vnesena_vsebina=vsebina, vnesena_nujnost=nujnost, napaka='Napaka: %s' % e)
     else:
+        conn.commit()
         redirect(url('sporocila', pacient_emso=pacient_emso))
 
 
@@ -227,6 +228,7 @@ def izvidi(pacient_emso):
         """, [pacient_emso])
         return template('izvidi.tpl', pacient=pacient, izvidi=cur, p_ali_z=p_ali_z, vnesen_razlog=razlog, vnesen_izvid=izvid, napaka='Napaka: %s' % e)
     else:
+        conn.commit()
         redirect(url('izvidi', pacient_emso=pacient_emso))
 
 
@@ -248,11 +250,17 @@ def dodaj_pacienta_post():
     user = request.get_cookie('user', secret=SECRET)
     _, zdravnik_emso = user
     try:
-        cur.execute('INSERT INTO pacient (emso, zdravstvena_st, ime, priimek, spol, datum_rojstva, teza, visina, zdravnik_emso) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)',
-                    (emso, st_zdr_zav, ime, priimek, spol, datum_rojstva, teza, visina, zdravnik_emso[0]))
+        cur.execute("""
+            INSERT INTO pacient (emso, zdravstvena_st, ime, priimek, spol, datum_rojstva, teza, visina, zdravnik_emso) 
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+
+            INSERT INTO uporabnik_pacient (emso, uporabnisko_ime, geslo)
+            VALUES (%s, %s, %s)
+        """, [emso, st_zdr_zav, ime, priimek, spol, datum_rojstva, teza, visina, zdravnik_emso[0], emso, ime + datum_rojstva[:4], st_zdr_zav])
     except Exception as e:
         conn.rollback()
         return template('dodaj_pacienta.tpl', ime=ime, priimek=priimek, emso=emso, st_zdr_zav=st_zdr_zav, spol=spol, datum_rojstva=datum_rojstva, visina=visina, teza=teza, zdravnik_emso=zdravnik_emso[0], napaka='Napaka: %s' % e)
+    conn.commit()
     redirect(url('index'))
 
 @get("/logout/")

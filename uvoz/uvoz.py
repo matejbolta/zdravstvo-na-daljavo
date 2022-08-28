@@ -118,7 +118,7 @@ def dodeli_pravice():
     try:
         cur.execute("""
             GRANT SELECT ON uporabnik_pacient, uporabnik_zdravnik, sporocilo, pregled, zaposlitev, pacient, zdravnik, zdravstveni_dom, pacient_okrnjen, zdravnik_okrnjen TO javnost;
-            GRANT INSERT ON pacient, pregled, sporocilo TO javnost;
+            GRANT INSERT ON pacient, pregled, sporocilo, uporabnik_pacient TO javnost;
         """)
     except Exception as e:
         conn.rollback()
