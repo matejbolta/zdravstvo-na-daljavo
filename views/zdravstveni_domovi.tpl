@@ -8,7 +8,7 @@
 <br>
 <button>
 <form action="{{url('zdravstveni_domovi', treshold=1)}}" method="POST">
-  <p>Minimalna kapaciteta  : <input style="text-align:center;" size="1" type="int" name="kapaciteta" value="{{kapaciteta}}"></p>
+  <p>Minimalna kapaciteta  : <input style="text-align:center;" size="1" type="int" name="kapaciteta" value="{{kapaciteta}}">  <input type="submit" value="OK"></p>
 </form>
 </button>
 <br><br>

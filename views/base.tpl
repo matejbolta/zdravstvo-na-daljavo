@@ -29,6 +29,7 @@
       table { margin-left: auto; margin-right: auto; font-family: Agency FB; background-color: #A5BDD9; }
       body { text-align: center; font-family: Verdana; background-color: #98B4D4; color: #262D35 }
       button { background-color: #B2C7DF; border: 3px ; border-color: antiquewhite ; color: #262D35; padding: 12px; font-size: 16px; font-family: Verdana; font-weight: bold; border-radius: 21px }
+      input[type=button], input[type=submit], input[type=reset] { background-color: #4C5A6A; border: none; color: white; padding: 2px 4px; text-decoration: none; margin: 4px 2px; cursor: pointer; }
     </style>
 
     <!-- bootstrap -->
