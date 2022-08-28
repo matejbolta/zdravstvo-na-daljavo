@@ -16,6 +16,17 @@ Alternativno: prenesite repozitorij in v terminalu poženite datoteko `zdravstvo
 
 ***
 
+### Vpisni podatki
+V spletno aplikacijo se lahko vpišete z vzorčnimi podatki in sicer:
+- kot pacient
+  - uporabniško ime: Philbert4242
+  - geslo: nb0PxTarICH
+- kot zdravnik
+  - uporabniško ime: Allison2397
+  - geslo: 9MrO4aI1
+
+***
+
 ### ER diagram
 
 ![er-diagram](https://user-images.githubusercontent.com/64838916/166563730-2a309fc2-b061-4ef0-8107-cf54e04e537c.png)
