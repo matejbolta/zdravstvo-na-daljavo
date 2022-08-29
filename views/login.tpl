@@ -5,8 +5,7 @@
 Zdravniki se prijavite z uporabniškim imenom in geslom, ki ste ju dobili v vašem zdravstvenem domu.
 </p>
 <p>
-Drugi uporabniki se prijavite z uporabniškim imenom in geslom, ki ste ju dobili od svojega zdravnika.
-<br> Če ste novejši uporabnik, je vaše uporabniško ime sestavljeno iz vašega imena in letnice rojstva (npr. Janez1975), geslo pa je številka vašega zdravstvenega zavarovanja.
+Drugi uporabniki uporabniško ime dobite iz vašega imena in prvih štirih števk emša (npr. Janez3011), geslo pa je številka vašega zdravstvenega zavarovanja.
 </p>
 
 <form class="form-signin" role="form" method="post" action=".">
