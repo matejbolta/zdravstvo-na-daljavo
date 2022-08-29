@@ -4,7 +4,7 @@
 import time
 import os
 import psycopg2, psycopg2.extensions, psycopg2.extras
-from uvoz.uvoz import password_hash
+import hashlib
 # Uvozimo bottle. Bottleext nam omogoča pravilno lepljenje URLjev, da ne pride to težav pri pogonu iz oblaka (binder)
 from bottleext import get, post, request, url, response, run, template, redirect, static_file, debug
 
@@ -45,6 +45,11 @@ def index():
 def login_get():
     return template('login.tpl', napaka=None, username=None)
 
+
+def password_hash(s):
+    h = hashlib.sha512()
+    h.update(s.encode('utf-8'))
+    return h.hexdigest()
 
 @post('/login/')
 def login_post():
