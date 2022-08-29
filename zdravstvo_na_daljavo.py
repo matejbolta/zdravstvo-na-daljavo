@@ -2,18 +2,16 @@
 # -*- encoding: utf-8 -*-
 
 import time
+import os
+import psycopg2, psycopg2.extensions, psycopg2.extras
+from uvoz.uvoz import password_hash
 # Uvozimo bottle. Bottleext nam omogoča pravilno lepljenje URLjev, da ne pride to težav pri pogonu iz oblaka (binder)
 from bottleext import get, post, request, url, response, run, template, redirect, static_file, debug
 
 # Na bazo se prijavimo kot uporabnik javnost
 import auth_public as auth
 
-# Uvozimo psycopg2
-import psycopg2, psycopg2.extensions, psycopg2.extras
-
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # Da šumniki in podobno delujejo pravilno.
-
-import os
 
 with open('secret.txt') as d:
     SECRET = d.read()
@@ -24,6 +22,7 @@ RELOADER = os.environ.get('BOTTLE_RELOADER', True)
 DB_PORT = os.environ.get('POSTGRES_PORT', 5432)
 
 debug(True) # Pythonova napaka ob sesutju se nam izpiše na spletni strani
+
 
 @get('/static/<filename:path>')
 def static(filename):
@@ -46,18 +45,12 @@ def index():
 def login_get():
     return template('login.tpl', napaka=None, username=None)
 
-# primer uporabniškega imena in gesla za zdravnika:
-#   Allison2397
-#   9MrO4aI1
-# za pacienta:
-#   Philbert4242
-#   nb0PxTarICH
-
 
 @post('/login/')
 def login_post():
     username = request.forms.username
-    password = request.forms.password # !!! MOGOCE JE TREBA SE HASH
+    password = password_hash(request.forms.password)
+    print(password)
     cur.execute('SELECT emso FROM uporabnik_pacient WHERE uporabnisko_ime=%s AND geslo=%s',(username, password))
     p = cur.fetchone()
     if p is None:
@@ -256,12 +249,13 @@ def dodaj_pacienta_post():
 
             INSERT INTO uporabnik_pacient (emso, uporabnisko_ime, geslo)
             VALUES (%s, %s, %s)
-        """, [emso, st_zdr_zav, ime, priimek, spol, datum_rojstva, teza, visina, zdravnik_emso[0], emso, ime + datum_rojstva[:4], st_zdr_zav])
+        """, [emso, st_zdr_zav, ime, priimek, spol, datum_rojstva, teza, visina, zdravnik_emso[0], emso, ime + emso[:4], password_hash(st_zdr_zav)])
     except Exception as e:
         conn.rollback()
         return template('dodaj_pacienta.tpl', ime=ime, priimek=priimek, emso=emso, st_zdr_zav=st_zdr_zav, spol=spol, datum_rojstva=datum_rojstva, visina=visina, teza=teza, zdravnik_emso=zdravnik_emso[0], napaka='Napaka: %s' % e)
     conn.commit()
     redirect(url('index'))
+
 
 @get("/logout/")
 def logout():

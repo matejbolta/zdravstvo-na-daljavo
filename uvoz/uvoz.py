@@ -6,6 +6,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 import auth
 import psycopg2, psycopg2.extensions, psycopg2.extras
+import hashlib
 psycopg2.extensions.register_type(psycopg2.extensions.UNICODE) # S tem se znebimo problemov z npr. šumniki
 
 def ustvari_tabele():
@@ -85,23 +86,25 @@ def ustvari_tabele():
     except Exception as e:
         conn.rollback()
         print(e)
+        return
     conn.commit()
 
 def pobrisi_tabele():
     try:
         cur.execute("""
-            DROP TABLE uporabnik_pacient CASCADE;
-            DROP TABLE uporabnik_zdravnik CASCADE;
-            DROP TABLE sporocilo CASCADE;
-            DROP TABLE pregled CASCADE;
-            DROP TABLE zaposlitev CASCADE;
-            DROP TABLE pacient CASCADE;
-            DROP TABLE zdravnik CASCADE;
-            DROP TABLE zdravstveni_dom CASCADE;
+            DROP TABLE IF EXISTS uporabnik_pacient CASCADE;
+            DROP TABLE IF EXISTS uporabnik_zdravnik CASCADE;
+            DROP TABLE IF EXISTS sporocilo CASCADE;
+            DROP TABLE IF EXISTS pregled CASCADE;
+            DROP TABLE IF EXISTS zaposlitev CASCADE;
+            DROP TABLE IF EXISTS pacient CASCADE;
+            DROP TABLE IF EXISTS zdravnik CASCADE;
+            DROP TABLE IF EXISTS zdravstveni_dom CASCADE;
         """)
     except Exception as e:
         conn.rollback()
         print(e)
+        return
     conn.commit()
 
 def uvozi_podatke():
@@ -123,6 +126,7 @@ def dodeli_pravice():
     except Exception as e:
         conn.rollback()
         print(e)
+        return
     conn.commit()
 
 def popravi_ustreznost_podatkov():
@@ -141,15 +145,35 @@ def popravi_ustreznost_podatkov():
     except Exception as e:
         conn.rollback()
         print(e)
+        return
     conn.commit()
 
-def resetiraj_bazo(tudi_pobrisi):
-    if tudi_pobrisi:
-        pobrisi_tabele()
+def password_hash(s):
+    h = hashlib.sha512()
+    h.update(s.encode('utf-8'))
+    return h.hexdigest()
+
+def zakodiraj_gesla():
+    for uporabnik in ['uporabnik_pacient', 'uporabnik_zdravnik']:
+        cur.execute(f'SELECT * FROM {uporabnik}')
+        vrstice = cur.fetchall()
+        for vrstica in vrstice:
+            emso, up_ime, geslo = vrstica
+            try:
+                cur.execute(f'UPDATE {uporabnik} SET uporabnisko_ime=%s, geslo=%s WHERE emso=%s', [up_ime[:-4] + emso[:4], password_hash(geslo), emso])
+            except Exception as e:
+                conn.rollback()
+                print(e)
+                return
+            conn.commit()
+
+def resetiraj_bazo():
+    pobrisi_tabele()
     ustvari_tabele()
     uvozi_podatke()
     dodeli_pravice()
     popravi_ustreznost_podatkov()
+    zakodiraj_gesla()
 
 # Test interakcije z online bazo:
 def zdravstveni_dom(stevilo=100):

@@ -19,10 +19,10 @@ Alternativno: prenesite repozitorij in v terminalu poženite datoteko `zdravstvo
 ### Vpisni podatki
 V spletno aplikacijo se lahko vpišete z vzorčnimi podatki in sicer:
 - kot pacient
-  - uporabniško ime: Philbert4242
-  - geslo: nb0PxTarICH
+  - uporabniško ime: Philbert1857
+  - geslo: 3157364
 - kot zdravnik
-  - uporabniško ime: Allison2397
+  - uporabniško ime: 	Allison4953
   - geslo: 9MrO4aI1
 
 ***
